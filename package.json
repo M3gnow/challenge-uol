@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Aplicação voltada para gerar PDF",
   "main": "challenge-uol.js",
+
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon challenge-uol.js",
-    "start": "nodemon challenge-uol.js"
+    "start": "node challenge-uol.js"
   },
   "keywords": [],
   "author": "Thiago Araújo - Megnow",
@@ -18,5 +19,5 @@
     "moment-timezone": "^0.5.33",
     "mongoose": "^5.12.10",
     "nodemon": "^2.0.7"
-  }
+    }
 }

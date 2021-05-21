@@ -17,4 +17,4 @@ const ClientSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('City', ClientSchema);
+module.exports = mongoose.model('Client', ClientSchema);

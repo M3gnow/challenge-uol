@@ -6,7 +6,7 @@ class Router {
     constructor(app) {
         app.get('/v1/ping', mainController.ping);
 
-        app.get('/v1/megnow', mainController.ping);
+        app.post('/v1/city', cityController.create);
     }
 }
 
