@@ -7,6 +7,8 @@ class Router {
         app.get('/v1/ping', mainController.ping);
 
         app.post('/v1/city', cityController.create);
+
+        app.post('/v1/client', clientController.create);
     }
 }
 
