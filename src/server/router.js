@@ -1,4 +1,6 @@
 const mainController = require('./controllers/main-controller');
+const cityController = require('./controllers/city-controller');
+const clientController = require('./controllers/client-controller');
 
 class Router {
     constructor(app) {
