@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+    mongodb:
+        image: mongo:4.2
+        container_name: mongodb
+        restart: always
+        ports:
+            - ${MONGO_PORT}:27017
+    challenge-uol:
+        image: node:alpine
+        container_name: challenge-api
+        restart: always
+        depends_on: 
+            - mongodb
+        ports:
+            - '${PORT}:${PORT}'
+        volumes: 
+            - .:/usr/src/app
+            # - /usr/src/app/node_modules
+        working_dir: /usr/src/app
+        command: yarn start
+        logging: 
+            driver: "json-file"
+            options: 
+                max-size: "10m"
+                max-file: "5"
