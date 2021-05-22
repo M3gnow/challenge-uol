@@ -1,21 +1,27 @@
 const cityLib = require('../../lib/city');
-const moment = require('moment-timezone');
+const logger = require('../../lib/logger');
+
 class CityController {
     async create(req, res) {
         try {
             const { name, state } = req.body;
 
             if (!name)
-                return res.status(404).send('Required [name] not found');
+                return res.status(400).send('Required [name] not found');
 
             if (!state)
-                return res.status(404).send('Required [state] not found');
+                return res.status(400).send('Required [state] not found');
 
             await cityLib.create(name, state);
 
             return res.status(201).send("Create city with sucess");
         } catch(e) {
-            throw e;
+            if (e.code = 11000) {
+                return res.status(400).send("Can't possible create duplicate city");    
+            }
+
+            logger.error(e.message);
+            return res.status(500).json({"Internal Server Error": e.message });
         }
     }
 
@@ -24,16 +30,17 @@ class CityController {
             const { name, state } = req.body;
 
             if (!name && !state)
-                return res.status(404).send('Required [name] || [state] not found');
+                return res.status(400).send('Required [name] || [state] not found');
             
-            const city = await cityLib.findByFilter(name, state);
+            const cities = await cityLib.findByFilter(name, state);
 
-            if (!city) 
+            if (!cities)
                 return res.status(200).json({});
 
-            return res.status(200).json(city);
+            return res.status(200).json(cities);
         } catch (e) {
-            throw e;
+            logger.error(e.message);
+            return res.status(500).json({"Internal Server Error": e.message });
         }
     }
 }

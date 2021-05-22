@@ -1,15 +1,17 @@
-const cityModel = require('../models/city-model');
+const cityModel = require('../config/mongo/models/city-model');
 const moment = require('moment-timezone');
 const logger = require('../lib/logger');
 
 class City {
     async create(name, state) {
         try {
-            await cityModel.collection.insertOne({
+            const clientInsert = new cityModel({
                 name,
                 state,
-                created_at: moment().tz(process.env.TIMEZONE).format()
+                created_at: moment().tz(process.env.TIMEZONE).toDate()
             });
+
+            await clientInsert.save();
         } catch (e) {
             logger.error(e);
             throw e;
@@ -24,13 +26,9 @@ class City {
             
             if (state) query.state = state;
 
-            const city = await cityModel.collection.find(query).toArray();
+            const city = await cityModel.findOne(query);
 
-            if (!city.length) return false;
-
-            city.map((city) => city.created_at = moment(city.created_at).tz(process.env.TIMEZONE).format("DD/MM/YYYY"));
-
-            return city;
+            return city ? city : false;
         } catch (e) {
             logger.error(e);
             throw e;
