@@ -1,5 +1,6 @@
 const cityModel = require('../models/city-model');
 const moment = require('moment-timezone');
+const logger = require('../lib/logger');
 
 class City {
     async create(name, state) {
@@ -10,6 +11,7 @@ class City {
                 created_at: moment().tz(process.env.TIMEZONE).format()
             });
         } catch (e) {
+            logger.error(e);
             throw e;
         }
     }
@@ -17,7 +19,7 @@ class City {
     async findByFilter(name, state) {
         try {
             const query = {};
-            console.log(name, state)
+
             if (name) query.name = name;
             
             if (state) query.state = state;
@@ -30,6 +32,7 @@ class City {
 
             return city;
         } catch (e) {
+            logger.error(e);
             throw e;
         }
     }
