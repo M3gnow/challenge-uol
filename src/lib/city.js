@@ -16,9 +16,11 @@ class City {
 
     async findByName(name) {
         try {
-            const city = await cityModel.findOne({ name });
+            const city = await cityModel.collection.findOne({ name });
 
             if (!city) return false;
+
+            city.created_at = moment(city.created_at).tz(process.env.TIMEZONE).format("DD/MM/YYYY");
 
             return city;
         } catch (e) {
