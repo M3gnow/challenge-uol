@@ -14,13 +14,19 @@ class City {
         }
     }
 
-    async findByName(name) {
+    async findByFilter(name, state) {
         try {
-            const city = await cityModel.collection.findOne({ name });
+            const query = {};
+            console.log(name, state)
+            if (name) query.name = name;
+            
+            if (state) query.state = state;
 
-            if (!city) return false;
+            const city = await cityModel.collection.find(query).toArray();
 
-            city.created_at = moment(city.created_at).tz(process.env.TIMEZONE).format("DD/MM/YYYY");
+            if (!city.length) return false;
+
+            city.map((city) => city.created_at = moment(city.created_at).tz(process.env.TIMEZONE).format("DD/MM/YYYY"));
 
             return city;
         } catch (e) {

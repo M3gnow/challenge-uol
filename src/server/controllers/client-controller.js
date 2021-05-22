@@ -21,13 +21,13 @@ class ClientController {
             if (!cityName) 
                 return res.status(404).send('Required [cityName] not found');
 
-            const findCityByName = await cityLib.findByName(cityName);
+            const findCityByName = await cityLib.findByFilter(cityName);
             
-            if (!findCityByName) res.status(404).send(`Required cityName: [${cityName}] not found`);
-
+            if (!findCityByName.length) return res.status(404).send(`Required cityName: [${cityName}] not found`);
+            
             const city = {
-                name: findCityByName.name,
-                state: findCityByName.state,
+                name: findCityByName[0].name,
+                state: findCityByName[0].state,
             };
             
             await clientLib.create(name, sex, birthDate, age, city);

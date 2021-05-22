@@ -19,14 +19,17 @@ class CityController {
         }
     }
 
-    async findByName(req, res) {
+    async findByFilter(req, res) {
         try {
-            const { name } = req.body;
+            const { name, state } = req.body;
 
-            if (!name)
-                return res.status(404).send('Required [name] not found');
+            if (!name && !state)
+                return res.status(404).send('Required [name] || [state] not found');
+            
+            const city = await cityLib.findByFilter(name, state);
 
-            const city = await cityLib.findByName(name);
+            if (!city) 
+                return res.status(200).json({});
 
             return res.status(200).json(city);
         } catch (e) {
