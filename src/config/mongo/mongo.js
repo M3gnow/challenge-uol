@@ -6,7 +6,8 @@ class MongoConnection {
         this.url = url;
         this.options = {
             useNewUrlParser: true,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
+            useFindAndModify: false
         };
 
         mongoose.connection.on('connected', () => logger.info(`mongo connected at ${this.url}`));
