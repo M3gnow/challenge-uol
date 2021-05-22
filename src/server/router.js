@@ -1,17 +1,20 @@
-const mainController = require('./controllers/main-controller');
-const cityController = require('./controllers/city-controller');
-const clientController = require('./controllers/client-controller');
+const { mainController, cityController, clientController } = require('./controllers');
 
-class Router {
-    constructor(app) {
-        app.get('/v1/ping', mainController.ping);
+const express = require('express');
+const router = express.Router();
 
-        app.get('/v1/city', cityController.findByFilter);
+router.get('/ping', mainController.ping);
 
-        app.post('/v1/city', cityController.create);
+router.get('/city', cityController.findByFilter);
 
-        app.post('/v1/client', clientController.create);
-    }
-}
+router.post('/city', cityController.create);
 
-module.exports = Router;
+router.get('/client', clientController.findByFilter);
+
+router.post('/client', clientController.create);
+
+router.delete('/client', clientController.deleteById);
+
+router.patch('/client', clientController.updateName);
+
+module.exports = router;

@@ -7,7 +7,7 @@ class Server {
         this.app = express();
         this.app.use(express.json());
         this.port = process.env.PORT || 8001;
-        this.router = new Router(this.app);
+        this.app.use('/v1', Router);
     }
 
     listen() {
