@@ -57,17 +57,20 @@ Utilize o link público: https://www.getpostman.com/collections/0737a8cb82a41452
 `- endpoint: /v1/client`
 `- metodo: PATCH`
 
-# Parameters (_Body_)
+# Parametros (_Body_)
 
 Todos parametros necessarios são esperados em JSON
 
 ## Regras de negocio
 
 [x] Cidades: nome e estado
+
 [x] Cliente: nome completo, sexo, data de nascimento, idade e cidade onde mora.
 
 #### Requisitos Obrigatórios:
 
 [x] Operações acima funcionando sem erros
+
 [x] Código válido, estruturado e organizado para que possamos testar sua aplicação
+
 [x] Utilização de Node 10+ o resto é por sua conta escolher.
