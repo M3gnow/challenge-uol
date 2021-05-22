@@ -1,13 +1,12 @@
-FROM node:alpine
+FROM node:alpine as builder
 
-WORKDIR /usr/app
+COPY package.json .
+COPY yarn.lock .
+RUN yarn --production
 
-COPY package*.json ./
+FROM node:alpine as app
 
-RUN yarn
-
+WORKDIR /var/www/challenge
+COPY --from=builder node_modules node_modules
 COPY . .
-
-EXPOSE 8001
-
 CMD ["yarn", "start"]
